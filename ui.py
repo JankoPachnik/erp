@@ -62,6 +62,9 @@ def print_menu(title, list_options, exit_message):
     """
 
     # your code
+    print(title)
+    for i in range(len(list_options)):
+        print(i, ":", list_options[i])
 
 
 def get_inputs(list_labels, title):
