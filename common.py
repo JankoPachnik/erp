@@ -19,6 +19,6 @@ def generate_random(table):
     generated = ''
 
     # your code
-    # chuj ahshhshshsshshhshshs
+    # chuj ahshhshshsshshhshshs aaaa
 
     return generated
