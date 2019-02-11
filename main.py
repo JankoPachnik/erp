@@ -3,19 +3,20 @@
 
 
 import sys
+
 import ui  # User Interface
-# Store module
-from store import store
+# Accounting module
+from accounting import accounting
+# Customer Relationship Management (CRM) module
+from crm import crm
 # Human Resources module
 from hr import hr
 # Tool manager module
 from inventory import inventory
-# Accounting module
-from accounting import accounting
 # Sales module
 from sales import sales
-# Customer Relationship Management (CRM) module
-from crm import crm
+# Store module
+from store import store
 
 
 def choose():
@@ -61,3 +62,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# aaaaa\\\\dsfsd aaaaa
