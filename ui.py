@@ -85,11 +85,10 @@ def get_inputs(list_labels, title):
     """
     inputs = []
     # your code
-    informacje = ["Name: ", "Surname: ", "Age: "]
-    print("Please provide your personal information\n")
-    for i in range(3):
-       inputs.append(input(informacje[i]))
-
+    informacje = list_labels
+    print(title)
+    for i in range(len(informacje)):
+        inputs.append(input(informacje[i]))
     return inputs
 
 def print_error_message(message):
