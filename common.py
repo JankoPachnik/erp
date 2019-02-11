@@ -21,5 +21,6 @@ def generate_random(table):
     generated = ''
 
     # your code
+    # chuj
 
     return generated
