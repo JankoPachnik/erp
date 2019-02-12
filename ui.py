@@ -150,7 +150,7 @@ def get_inputs(list_labels, title):
     informacje = list_labels
     print(title)
     for i in range(len(informacje)):
-        inputs.append(input(informacje[i]))
+        inputs.append(input(informacje[i+1]))
     return inputs
 
 def print_error_message(message):
