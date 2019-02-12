@@ -94,7 +94,7 @@
 	            line_with_commas = new_line.split(';')
 	            external_file_as_table.append(line_with_commas)
 	        return external_file_as_table
-#czy bierze slownik czy jedna liste, czy liste list??? okreslic klucze jak liste list wrzucic do csv??
+
 		
 
 def print_result(result, label):
