@@ -10,6 +10,7 @@ Data table structure:
 # everything you'll need is imported:
 # User interface module
 import ui
+import main
 # data manager module
 import data_manager
 # common module
@@ -27,6 +28,33 @@ def start_module():
     """
 
     # your code
+    options_inventory = ["Show table",
+                         "Add",
+                         "Remove",
+                         "Update",
+                         "get oldest person",
+                         "get persons closest to average"]
+
+    ui.print_menu("Inventory Menu", options_inventory, "Exit program")
+
+    inputs = ui.get_inputs(["Please enter a number: "], "")
+    option = inputs[0]
+    if option == "1":
+        show_table(table)
+    elif option == "2":
+        add(table)
+    elif option == "3":
+        remove(table, id_)
+    elif option == "4":
+        update(table, id_)
+    elif option == "5":
+        get_oldest_person(table)
+    elif option == "6":
+        get_persons_closest_to_average(table)
+    elif option == "0":
+        main.main()
+    else:
+        raise KeyError("There is no such option.")
 
 
 def show_table(table):
@@ -41,6 +69,33 @@ def show_table(table):
     """
 
     # your code
+    options_inventory = ["Show table",
+                         "Add",
+                         "Remove",
+                         "Update",
+                         "get longest name id",
+                         "get subscribed emails"]
+
+    ui.print_menu("Inventory Menu", options_inventory, "Exit program")
+
+    inputs = ui.get_inputs(["Please enter a number: "], "")
+    option = inputs[0]
+    if option == "1":
+        show_table(table)
+    elif option == "2":
+        add(table)
+    elif option == "3":
+        remove(table, id_)
+    elif option == "4":
+        update(table, id_)
+    elif option == "5":
+        get_lowest_price_item_id(table)
+    elif option == "6":
+        get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
+    elif option == "0":
+        main.main()
+    else:
+        raise KeyError("There is no such option.")
 
 
 def add(table):
