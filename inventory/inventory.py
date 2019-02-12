@@ -87,11 +87,11 @@ def add(table):
     # your code 4444
     try:
         unique_id = common.generate_random(table)
-        game_name = input('Please write a name of a game you want to add\n')
-        developer = input('Please write a name of game developer\n')
+        console = input('Please write a name of a console you want to add\n')
+        developer = input('Please write a name of developer\n')
         year = input('Please write a year the game was published\n')
         stock = input('Please write number of copies you want to add\n')
-        new_row = (unique_id, game_name, developer, year, stock)
+        new_row = (unique_id, console, developer, year, stock)
         table.append(new_row)
         return table
     except ValueError:
@@ -134,11 +134,11 @@ def update(table, id_):
         for i in range(len(table)):
             if table[i][0] == id_:
                 print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
-                game_name = input('Update name of a game (current: {})\n'.format(table[i][1]))
-                developer = input('Update name of a game developer (current: {})\n'.format(table[i][2]))
+                console = input('Update name of a Console (current: {})\n'.format(table[i][1]))
+                developer = input('Update name of a developer (current: {})\n'.format(table[i][2]))
                 year = input('Update date of release (current: {})\n'.format(table[i][3]))
                 stock = input('Update number of copies (current: {})\n'.format(table[i][4]))
-                if game_name != '':
+                if console != '':
                     table[i][1] = game_name
                 if developer != '':
                     table[i][2] = developer
