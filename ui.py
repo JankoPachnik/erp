@@ -123,7 +123,8 @@ def print_menu(title, list_options, exit_message):
     # your code zrobione aaa
     print(title)
     for i in range(len(list_options)):
-        print(i, ":", list_options[i])
+        print(i+1, ":", list_options[i])
+    print("0 : Exit")
 
 
 def get_inputs(list_labels, title):
@@ -150,7 +151,7 @@ def get_inputs(list_labels, title):
     informacje = list_labels
     print(title)
     for i in range(len(informacje)):
-        inputs.append(input(informacje[i+1]))
+        inputs.append(input(informacje[i+]))
     return inputs
 
 def print_error_message(message):
