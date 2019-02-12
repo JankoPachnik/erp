@@ -35,27 +35,29 @@ def start_module():
                          "Update",
                          "get longest name id",
                          "get subscribed emails"]
-
-    ui.print_menu("Inventory Menu", options_inventory, "Exit program")
-
+    file_directory = 'crm/customers.csv'
+    table = data_manager.get_table_from_file(file_directory)
+    ui.print_menu("CRM menu", options_inventory, "Exit program")
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
         show_table(table)
     elif option == "2":
         add(table)
+        data_manager.write_table_to_file(file_directory, table)
     elif option == "3":
+        id_ = input('Please provide ID of a record you want to delete\n')
         remove(table, id_)
+        data_manager.write_table_to_file(file_directory, table)
     elif option == "4":
+        id_ = input('Please provide ID of a record you want to edit\n')
         update(table, id_)
-    elif option == "5":
-        get_longest_name_id(table)
-    elif option == "6":
-        get_subscribed_emails(table)
+        data_manager.write_table_to_file(file_directory, table)
     elif option == "0":
         main.main()
     else:
         raise KeyError("There is no such option.")
+
 
 def show_table(table):
     """
@@ -67,7 +69,6 @@ def show_table(table):
     Returns:
         None
     """
-
     # your code
 
 
@@ -81,8 +82,16 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-
-    # your code
+    try:
+        unique_id = common.generate_random(table)
+        customer = input('Please write a name of a customer\n')
+        email = input('Please write an email\n')
+        status = input('Please write if a customer is Active\n')
+        new_row = (unique_id, customer, email, status)
+        table.append(new_row)
+        return table
+    except ValueError:
+        print('you need to provide correct Values.')
 
     return table
 
@@ -99,8 +108,12 @@ def remove(table, id_):
         list: Table without specified record.
     """
 
-    # your code
-
+    try:
+        for i in range(len(table)):
+            if table[i][0] == id_:
+                table.remove(table[i])
+    except ValueError:
+        print('The ID you are trying to reach is currently unavailable')
     return table
 
 
@@ -115,9 +128,21 @@ def update(table, id_):
     Returns:
         list: table with updated record
     """
-
-    # your code
-
+    try:
+        for i in range(len(table)):
+            if table[i][0] == id_:
+                print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
+                customer = input('Update name of a Customer (current: {})\n'.format(table[i][1]))
+                email = input('Update email (current: {})\n'.format(table[i][2]))
+                status = input('Update status (current: {})\n'.format(table[i][3]))
+                if customer != '':
+                    table[i][1] = customer
+                if email != '':
+                    table[i][2] = email
+                if status != '':
+                    table[i][3] = status
+    except ValueError:
+        print('The ID you are trying to reach is currently unavailable')
     return table
 
 

@@ -12,7 +12,7 @@ Data table structure:
 
 # everything you'll need is imported:
 # User interface module
-import iu
+import ui
 import main
 
 # data manager module
