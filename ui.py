@@ -84,6 +84,26 @@
 	    print_columns_title(title_list, max_length_column)
 	    print_items_table(table, max_length_column, sum_length, title_list)
 	    print_bottom_border(sum_length)
+def print_table(table, title_list):
+    """
+    Prints table with data.
+
+    Example:
+        /-----------------------------------\
+        |   id   |      title     |  type   |
+        |--------+----------------+---------|
+        |   0    | Counter strike |    fps  |
+        |--------+----------------+---------|
+        |   1    |       fo       |    fps  |
+        \-----------------------------------/
+
+    Args:
+        table (list): list of lists - table to display
+        title_list (list): list containing table headers
+
+    Returns:
+        None: This function doesn't return anything it only prints to console.
+    """
 
 
 
@@ -123,7 +143,10 @@ def print_menu(title, list_options, exit_message):
         None: This function doesn't return anything it only prints to console.
     """
 
-    # your code
+    # your code zrobione aaa
+    print(title)
+    for i in range(len(list_options)):
+        print(i, ":", list_options[i])
 
 
 def get_inputs(list_labels, title):
@@ -146,11 +169,12 @@ def get_inputs(list_labels, title):
             [<user_input_1>, <user_input_2>, <user_input_3>]
     """
     inputs = []
-
     # your code
-
+    informacje = list_labels
+    print(title)
+    for i in range(len(informacje)):
+        inputs.append(input(informacje[i]))
     return inputs
-
 
 def print_error_message(message):
     """
@@ -164,3 +188,4 @@ def print_error_message(message):
     """
 
     # your code
+    print("Error:", message)
