@@ -84,28 +84,18 @@
 	    print_columns_title(title_list, max_length_column)
 	    print_items_table(table, max_length_column, sum_length, title_list)
 	    print_bottom_border(sum_length)
-def print_table(table, title_list):
-    """
-    Prints table with data.
+		
 
-    Example:
-        /-----------------------------------\
-        |   id   |      title     |  type   |
-        |--------+----------------+---------|
-        |   0    | Counter strike |    fps  |
-        |--------+----------------+---------|
-        |   1    |       fo       |    fps  |
-        \-----------------------------------/
+	def list_of_lists_from(csv_file):
+	    external_file_as_table = []
+	    with open(csv_file, 'r') as file:
+	        for line in file.readlines():
+	            new_line = line.strip('\n')
+	            line_with_commas = new_line.split(';')
+	            external_file_as_table.append(line_with_commas)
+	        return external_file_as_table
 
-    Args:
-        table (list): list of lists - table to display
-        title_list (list): list containing table headers
-
-    Returns:
-        None: This function doesn't return anything it only prints to console.
-    """
-
-
+		
 
 def print_result(result, label):
     """
