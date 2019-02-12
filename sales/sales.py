@@ -39,18 +39,24 @@ def start_module():
                          "get lowest price item id",
                          "get itemss old between"]
 
-    ui.print_menu("Inventory Menu", options_inventory, "Exit program")
-
+    file_directory = 'sales/sales.csv'
+    table = data_manager.get_table_from_file(file_directory)
+    ui.print_menu("Sales menu", options_inventory, "Exit program")
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
         show_table(table)
     elif option == "2":
         add(table)
+        data_manager.write_table_to_file(file_directory, table)
     elif option == "3":
+        id_ = input('Please provide ID of a record you want to delete\n')
         remove(table, id_)
+        data_manager.write_table_to_file(file_directory, table)
     elif option == "4":
+        id_ = input('Please provide ID of a record you want to edit\n')
         update(table, id_)
+        data_manager.write_table_to_file(file_directory, table)
     elif option == "5":
         get_lowest_price_item_id(table)
     elif option == "6":
@@ -59,6 +65,7 @@ def start_module():
         main.main()
     else:
         raise KeyError("There is no such option.")
+
 
 def show_table(table):
     """
@@ -85,7 +92,19 @@ def add(table):
         list: Table with a new record
     """
 
-    # your code
+    try:
+        unique_id = common.generate_random(table)
+        game_name = input('Please write a name of a Game\n')
+        price = input('Please write a price of a transaction\n')
+        month = input('Please write month of a transaction \n')
+        day = input('Please write a day of a transaction \n')
+        year = input('Please write a year of a transaction\n')
+
+        new_row = (unique_id, game_name, price, month, day, year)
+        table.append(new_row)
+        return table
+    except ValueError:
+        print('you need to provide correct Values.')
 
     return table
 
@@ -102,8 +121,12 @@ def remove(table, id_):
         list: Table without specified record.
     """
 
-    # your code
-
+    try:
+        for i in range(len(table)):
+            if table[i][0] == id_:
+                table.remove(table[i])
+    except ValueError:
+        print('The ID you are trying to reach is currently unavailable')
     return table
 
 
@@ -119,8 +142,27 @@ def update(table, id_):
         list: table with updated record
     """
 
-    # your code
-
+    try:
+        for i in range(len(table)):
+            if table[i][0] == id_:
+                print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
+                game_name = input('Update name of the Employee (current: {})\n'.format(table[i][1]))
+                price = input('Update sales price (current: {})\n'.format(table[i][2]))
+                month = input('Update month of a sales (current: {})\n'.format(table[i][2]))
+                day = input('Update day of a sales (current: {})\n'.format(table[i][2]))
+                year = input('Update year of sales (current: {})\n'.format(table[i][2]))
+                if game_name != '':
+                    table[i][1] = game_name
+                if price != '':
+                    table[i][2] = price
+                if month != '':
+                    table[i][3] = month
+                if day != '':
+                    table[i][4] = day
+                if year != '':
+                    table[i][5] = year
+    except ValueError:
+        print('The ID you are trying to reach is currently unavailable')
     return table
 
 
