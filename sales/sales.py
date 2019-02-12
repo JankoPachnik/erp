@@ -148,9 +148,9 @@ def update(table, id_):
                 print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
                 game_name = input('Update name of the Employee (current: {})\n'.format(table[i][1]))
                 price = input('Update sales price (current: {})\n'.format(table[i][2]))
-                month = input('Update month of a sales (current: {})\n'.format(table[i][2]))
-                day = input('Update day of a sales (current: {})\n'.format(table[i][2]))
-                year = input('Update year of sales (current: {})\n'.format(table[i][2]))
+                month = input('Update month of a sales (current: {})\n'.format(table[i][3]))
+                day = input('Update day of a sales (current: {})\n'.format(table[i][4]))
+                year = input('Update year of sales (current: {})\n'.format(table[i][5]))
                 if game_name != '':
                     table[i][1] = game_name
                 if price != '':
