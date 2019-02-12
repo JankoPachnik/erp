@@ -84,7 +84,7 @@
 	    print_columns_title(title_list, max_length_column)
 	    print_items_table(table, max_length_column, sum_length, title_list)
 	    print_bottom_border(sum_length)
-		
+
 
 	def list_of_lists_from(csv_file):
 	    external_file_as_table = []
@@ -94,7 +94,7 @@
 	            line_with_commas = new_line.split(';')
 	            external_file_as_table.append(line_with_commas)
 	        return external_file_as_table
-
+#czy bierze slownik czy jedna liste, czy liste list??? okreslic klucze jak liste list wrzucic do csv??
 		
 
 def print_result(result, label):
