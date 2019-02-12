@@ -43,7 +43,7 @@ def start_module():
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
-        show_table(table)
+        show_table('inventory.csv')
     elif option == "2":
         add(table)
     elif option == "3":
@@ -67,7 +67,9 @@ def show_table(table):
         None
     """
 
-    # your code
+    with open(table, 'r') as f:
+        f.readlines(1)
+
 
 
 def add(table):
@@ -149,3 +151,6 @@ def get_average_durability_by_manufacturers(table):
     """
 
     # your code
+
+
+start_module()
