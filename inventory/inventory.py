@@ -17,18 +17,43 @@ import data_manager
 # common module
 import common
 
+import main
+
 
 def start_module():
     """
     Starts this module and displays its menu.
-     * User can access default special features from here.
-     * User can go back to main menu from here.
+    * User can access default special features from here.
+    * User can go back to main menu from here.
 
     Returns:
-        None
-    """
-
+    None
+    """    
     # your code
+
+    options_inventory = ["Show table",
+               "Add",
+               "Remove",
+               "Update",
+               "Available items",
+               "Average durability"]
+
+    ui.print_menu("Inventory Menu", options_inventory, "Exit program")
+
+    inputs = ui.get_inputs(["Please enter a number: "], "")
+    option = inputs[0]
+    if option == "1":
+        show_table(table)
+    elif option == "2":
+        add(table)
+    elif option == "3":
+        remove(table, id_)
+    elif option == "4":
+        update(table, id_)
+    elif option == "0":
+        main.main()
+    else:
+        raise KeyError("There is no such option.")
 
 
 def show_table(table):
