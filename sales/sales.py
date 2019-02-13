@@ -29,39 +29,42 @@ def start_module():
     Returns:
         None
     """
-    options_inventory = ["Show table",
-                         "Add",
-                         "Remove",
-                         "Update",
-                         "get lowest price item id",
-                         "get items old between"]
+    module_active = 1
+    while module_active == 1:
+        options_inventory = ["Show table",
+                             "Add",
+                             "Remove",
+                             "Update",
+                             "get lowest price item id",
+                             "get items old between"]
 
-    file_directory = 'sales/sales.csv'
-    table = data_manager.get_table_from_file(file_directory)
-    ui.print_menu("Sales menu", options_inventory, "Exit program")
-    inputs = ui.get_inputs(["Please enter a number: "], "")
-    option = inputs[0]
-    if option == "1":
-        show_table(table)
-    elif option == "2":
-        add(table)
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "3":
-        id_ = ui.get_inputs(['Please provide ID of a record you want to delete\n'], "")
-        remove(table, id_[0])
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "4":
-        id_ = ui.get_inputs(['Please provide ID of a record you want to edit\n'], "")
-        update(table, id_[0])
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "5":
-        get_lowest_price_item_id(table)
-    elif option == "6":
-        get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
-    elif option == "0":
-        main.main()
-    else:
-        raise KeyError("There is no such option.")
+        file_directory = 'sales/sales.csv'
+        table = data_manager.get_table_from_file(file_directory)
+        ui.print_menu("Sales menu", options_inventory, "Exit program")
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+        if option == "1":
+            show_table(table)
+        elif option == "2":
+            add(table)
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "3":
+            id_ = ui.get_inputs(['Please provide ID of a record you want to delete\n'], "")
+            remove(table, id_[0])
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "4":
+            id_ = ui.get_inputs(['Please provide ID of a record you want to edit\n'], "")
+            update(table, id_[0])
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "5":
+            get_lowest_price_item_id(table)
+        elif option == "6":
+            get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
+        elif option == "0":
+            module_active = 0
+            main.main()
+        else:
+            raise KeyError("There is no such option.")
 
 
 def show_table(table):
@@ -92,7 +95,7 @@ def add(table):
 
     try:
         unique_id = common.generate_random(table)
-        game_data = ui.get_inputs(['Game name', 'Price', 'Month', 'Day', 'Year'],
+        game_data = ui.get_inputs(['Game name: ', 'Price: ', 'Month: ', 'Day: ', 'Year: '],
                                   "Please provide information about product")
         new_row = (unique_id, game_data[0], game_data[1], game_data[2], game_data[3], game_data[4])
         table.append(new_row)
