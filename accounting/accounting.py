@@ -18,6 +18,7 @@ import main
 # data manager module
 import data_manager
 # common module
+import common
 
 
 def start_module():
@@ -30,40 +31,41 @@ def start_module():
         None
     """
 
-    # you code
-    options_inventory = ["Show table",
-                         "Add",
-                         "Remove",
-                         "Update",
-                         "which year max",
-                         "avg_amount"]
+    module_active = 1
+    while module_active == 1:
+        options_inventory = ["Show table",
+                             "Add",
+                             "Remove",
+                             "Update",
+                             "which year max",
+                             "avg_amount"]
 
-    file_directory = 'accounting/items.csv'
-    table = data_manager.get_table_from_file(file_directory)
-    ui.print_menu("Accounting menu", options_inventory, "Exit program")
-    inputs = ui.get_inputs(["Please enter a number: "], "")
-    option = inputs[0]
-    if option == "1":
-        show_table(table)
-    elif option == "2":
-        add(table)
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "3":
-        id_ = input('Please provide ID of a record you want to delete\n')
-        remove(table, id_)
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "4":
-        id_ = input('Please provide ID of a record you want to edit\n')
-        update(table, id_)
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "5":
-        get_lowest_price_item_id(table)
-    elif option == "6":
-        get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
-    elif option == "0":
-        main.main()
-    else:
-        raise KeyError("There is no such option.")
+        file_directory = 'accounting/items.csv'
+        table = data_manager.get_table_from_file(file_directory)
+        ui.print_menu("Accounting menu", options_inventory, "Exit program")
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+        if option == "1":
+            show_table(table)
+        elif option == "2":
+            add(table)
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "3":
+            id_ = ui.get_inputs(['Please provide ID of a record you want to delete\n'])
+            remove(table, id_)
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "4":
+            id_ = ui.get_inputs(['Please provide ID of a record you want to edit\n'])
+            update(table, id_)
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "5":
+            get_lowest_price_item_id(table)
+        elif option == "6":
+            get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
+        elif option == "0":
+            main.main()
+        else:
+            raise KeyError("There is no such option.")
 
 
 def show_table(table):
@@ -77,7 +79,8 @@ def show_table(table):
         None
     """
 
-    # your code
+    title_list = ["id", "month", "day", "year", "type", "amount"]
+    ui.print_table(table, title_list)
 
 
 def add(table):
@@ -93,12 +96,9 @@ def add(table):
 
     try:
         unique_id = common.generate_random(table)
-        month = input('Please write a title of a game\n')
-        day = input('Please write a manufacturer\n')
-        year = input('Please write a price \n')
-        type = input('Please write how many days in stock \n')
-        amount = input('Please write how many days in stock \n')
-        new_row = (unique_id, month, day, year, type, amount)
+        game_data = ui.get_inputs(['Month: ', 'Day: ', 'Year: ', 'Type: ', 'Amount: '],
+                                  "Please provide information about transaction")
+        new_row = (unique_id, game_data[0], game_data[1], game_data[2], game_data[3], game_data[4])
         table.append(new_row)
         return table
     except ValueError:
@@ -144,21 +144,20 @@ def update(table, id_):
         for i in range(len(table)):
             if table[i][0] == id_:
                 print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
-                month = input('Update name of the Employee (current: {})\n'.format(table[i][1]))
-                day = input('Update sales price (current: {})\n'.format(table[i][2]))
-                year = input('Update month of a sales (current: {})\n'.format(table[i][3]))
-                type = input('Update day of a sales (current: {})\n'.format(table[i][4]))
-                amount = input('Update year of sales (current: {})\n'.format(table[i][5]))
-                if month != '':
-                    table[i][1] = month
-                if day != '':
-                    table[i][2] = day
-                if year != '':
-                    table[i][3] = year
-                if type != '':
-                    table[i][4] = type
-                if amount != '':
-                    table[i][5] = amount
+                game_data = ui.get_inputs(['Month ({}): '.format(table[i][1]), 'Day ({}): '.format(table[i][2]),
+                                           'Year ({}): '.format(table[i][3]), 'Type ({}): '.format(table[i][4]),
+                                           'Amount ({}): '.format(table[i][5])],
+                                          "Please update information about product")
+                if game_data[0] != '':
+                    table[i][1] = game_data[0]
+                if game_data[1] != '':
+                    table[i][2] = game_data[1]
+                if game_data[2] != '':
+                    table[i][3] = game_data[2]
+                if game_data[3] != '':
+                    table[i][4] = game_data[3]
+                if game_data[4] != '':
+                    table[i][5] = game_data[4]
     except ValueError:
         print('The ID you are trying to reach is currently unavailable')
     return table
