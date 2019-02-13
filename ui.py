@@ -55,10 +55,13 @@ def print_items_table(table, max_length_column, sum_length, title_list):
         for col_i in range(len(row)):
             col = row[col_i]
             width = max_length_column[col_i]
+            print('|', col.center(width),  end='')
+            '''
             if col_i == 0:
-                print('|', str(row_number).center(width),  end='')
+                print('|', col.center(width),  end='')  #str(row_number) -> to było w miejscu col
             else:
                 print('|', col.center(width),  end='')
+        '''
         row_number += 1
         print('|')
 
