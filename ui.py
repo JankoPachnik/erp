@@ -103,8 +103,14 @@ def print_result(result, label):
 
     # your code
     print(label)
-    for i in range(result):
-        print(result[i])
+    a = {"aaa": 1}
+    if type(result) == type(a):
+        for i in result:
+            print("{:>{a}}  {:>{b}}".format(result[i], i, a=3, b=44))
+    else:
+        for i in range(result):
+            print(result[i])
+
 
 
 def print_menu(title, list_options, exit_message):
@@ -130,6 +136,7 @@ def print_menu(title, list_options, exit_message):
 
     # your code zrobione aaa
     print(title)
+
     for i in range(len(list_options)):
         print(i + 1, ":", list_options[i])
     print("0 : Exit")

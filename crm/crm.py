@@ -35,9 +35,9 @@ def start_module():
                          "Update",
                          "get longest name id",
                          "get subscribed emails"]
-
-    ui.print_menu("Inventory Menu", options_inventory, "Exit program")
-
+    file_directory = 'crm/customers.csv'
+    ui.print_menu("CRM Menu", options_inventory, "Exit program")
+    table = data_manager.get_table_from_file(file_directory)
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
@@ -136,7 +136,24 @@ def get_longest_name_id(table):
                 the last by alphabetical order of the names)
         """
 
-    # your code
+    # your code6
+    all_items = [table[1] for table in table]
+    print(all_items)
+    for i in all_items:
+        now = 0
+        new = len(i)
+        if new >= now:
+            now = new
+        else:
+            new = 1
+
+
+
+
+
+
+
+
 
 
 # the question: Which customers has subscribed to the newsletter?
