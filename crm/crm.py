@@ -181,5 +181,6 @@ def get_subscribed_emails(table):
         if lista[i][-1] == 0:
             lista.remove(lista)
 
-    for i in range(len(lista)):
-        print(lista[i])
+    label = "get_subscribed_emails"
+    result = lista
+    ui.print_result(result, label)

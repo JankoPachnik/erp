@@ -112,7 +112,7 @@ def print_result(result, label):
         for i in result:
             print("{:>{a}}  {:>{b}}".format(result[i], i, a=3, b=44))
     if type(result) == type(b):
-        for i in range(result):
+        for i in range(len(result)):
             print(result[i])
     else:
         print(result)
