@@ -166,20 +166,24 @@ def get_subscribed_emails(table):
     # your code
 
     email = [table[1] for table in table]
-
     names = [table[2] for table in table]
-
     subsc = [table[3] for table in table]
     lista = []
-    for i in range(len(names)):
+    for element in range(len(names)):
         lista = names
-        lista[i] += ":"
-        lista[i] += email[i]
-        lista[i] += ":"
-        lista[i] += subsc[i]
-    for i in range(len(lista)):
-        if lista[i][-1] == 0:
-            lista.remove(lista)
+        lista[element] += ":"
+        lista[element] += email[element]
+        lista[element] += ":"
+        lista[element] += subsc[element]
+
+    element = 0
+    while element < len(lista):
+        if lista[element][-1] == "0":
+            lista.pop(element)
+        else:
+            element += 1
+
+
 
     label = "get_subscribed_emails"
     result = lista
