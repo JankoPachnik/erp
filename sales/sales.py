@@ -29,9 +29,6 @@ def start_module():
     Returns:
         None
     """
-
-    # your code
-
     options_inventory = ["Show table",
                          "Add",
                          "Remove",
@@ -50,12 +47,12 @@ def start_module():
         add(table)
         data_manager.write_table_to_file(file_directory, table)
     elif option == "3":
-        id_ = input('Please provide ID of a record you want to delete\n')
-        remove(table, id_)
+        id_ = ui.get_inputs(['Please provide ID of a record you want to delete\n'], "")
+        remove(table, id_[0])
         data_manager.write_table_to_file(file_directory, table)
     elif option == "4":
-        id_ = input('Please provide ID of a record you want to edit\n')
-        update(table, id_)
+        id_ = ui.get_inputs(['Please provide ID of a record you want to edit\n'], "")
+        update(table, id_[0])
         data_manager.write_table_to_file(file_directory, table)
     elif option == "5":
         get_lowest_price_item_id(table)
@@ -78,7 +75,8 @@ def show_table(table):
         None
     """
 
-    # your code
+    title_list = ["Id", "Title", "Price", "Month", "Day", "Year"]
+    ui.print_table(table, title_list)
 
 
 def add(table):
@@ -94,13 +92,9 @@ def add(table):
 
     try:
         unique_id = common.generate_random(table)
-        game_name = input('Please write a name of a Game\n')
-        price = input('Please write a price of a transaction\n')
-        month = input('Please write month of a transaction \n')
-        day = input('Please write a day of a transaction \n')
-        year = input('Please write a year of a transaction\n')
-
-        new_row = (unique_id, game_name, price, month, day, year)
+        game_data = ui.get_inputs(['Game name', 'Price', 'Month', 'Day', 'Year'],
+                                  "Please provide information about product")
+        new_row = (unique_id, game_data[0], game_data[1], game_data[2], game_data[3], game_data[4])
         table.append(new_row)
         return table
     except ValueError:
@@ -146,21 +140,19 @@ def update(table, id_):
         for i in range(len(table)):
             if table[i][0] == id_:
                 print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
-                game_name = input('Update name of the Employee (current: {})\n'.format(table[i][1]))
-                price = input('Update sales price (current: {})\n'.format(table[i][2]))
-                month = input('Update month of a sales (current: {})\n'.format(table[i][3]))
-                day = input('Update day of a sales (current: {})\n'.format(table[i][4]))
-                year = input('Update year of sales (current: {})\n'.format(table[i][5]))
-                if game_name != '':
-                    table[i][1] = game_name
-                if price != '':
-                    table[i][2] = price
-                if month != '':
-                    table[i][3] = month
-                if day != '':
-                    table[i][4] = day
-                if year != '':
-                    table[i][5] = year
+                game_data = ui.get_inputs(['Game name {}'.format(table[i][1])), 'Price'.format(table[i][2]),
+                            'Month'.format(table[i][3]), 'Day'.format(table[i][4]), 'Year'.format(table[i][5]))],
+                                          "Please update information about product")
+                if game_data[0] != '':
+                    table[i][1] = game_data[0]
+                if game_data[1] != '':
+                    table[i][2] = game_data[1]
+                if game_data[2] != '':
+                    table[i][3] = game_data[2]
+                if game_data[3] != '':
+                    table[i][4] = game_data[3]
+                if game_data[4] != '':
+                    table[i][5] = game_data[4]
     except ValueError:
         print('The ID you are trying to reach is currently unavailable')
     return table
