@@ -138,22 +138,16 @@ def get_longest_name_id(table):
 
     # your code6
     all_items = [table[1] for table in table]
-    print(all_items)
+    longest_now = 0
+    result = 0
     for i in all_items:
-        now = 0
+        result = 0
         new = len(i)
-        if new >= now:
-            now = new
-        else:
-            new = 1
-
-
-
-
-
-
-
-
+        if new >= longest_now:
+            longest_now = new
+            result = i
+    label = "longest name"
+    ui.print_result(result, label)
 
 
 # the question: Which customers has subscribed to the newsletter?

@@ -104,12 +104,15 @@ def print_result(result, label):
     # your code
     print(label)
     a = {"aaa": 1}
+    b = ["aaa"]
     if type(result) == type(a):
         for i in result:
             print("{:>{a}}  {:>{b}}".format(result[i], i, a=3, b=44))
-    else:
+    if type(result) == type(b):
         for i in range(result):
             print(result[i])
+    else:
+        print(result)
 
 
 
