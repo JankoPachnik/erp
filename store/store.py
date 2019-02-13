@@ -162,6 +162,7 @@ def update(table, id_):
 
 # special functions:
 # ------------------
+#ggg
 
 def get_counts_by_manufacturers(table):
     """
