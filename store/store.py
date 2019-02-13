@@ -189,13 +189,13 @@ def get_counts_by_manufacturers(table):
         manufacturers.append(table[i][2])
     manu_len = len(manufacturers)
     for i in range(manu_len):
-        licznik = 0
+        number = 0
         if manufacturers[i] in manucount:
             continue
         for j in range(manu_len):
             if manufacturers[j] == manufacturers[i]:
-                licznik += 1            
-        manucount[manufacturers[i]] = licznik
+                number += 1            
+        manucount[manufacturers[i]] = number
     return manucount
 
 def get_average_by_manufacturer(table, manufacturer):
@@ -209,24 +209,25 @@ def get_average_by_manufacturer(table, manufacturer):
     Returns:
          number
     """
-'''
+
     # your code
+    avarage = 0
     manufacturers = [] 
-    manucount = {
-    }
-
+    manufacturers_stock = []
+    stock_number = 0
     table_len = len(table)
+    number = 0
+
     for i in range(table_len):
-        manufacturers.append(table[i][2])
-    manu_len = len(manufacturers)
-    for i in range(manu_len):
-        licznik = 0
-        if manufacturers[i] in manucount:
-            continue
-        for j in range(manu_len):
-            if manufacturers[j] == manufacturers[i]:
-                licznik += 1            
-        manucount[manufacturers[i]] = licznik
+        manufacturers.append([table[i][2]])
+        manufacturers_stock.append(table[i][4])
 
+    for i in range(table_len):
+        if manufacturer == manufacturers[i]:
+            stock_number += float(manufacturers_stock[i])
+            number += 1
 
-    return avarage'''
+    avarage = stock_number/number
+    print (avarage)
+
+    return avarage
