@@ -28,14 +28,14 @@ def start_module():
     """
 
     # your code
-    options_inventory = ["Show table",
+    options_hr = ["Show table",
                          "Add",
                          "Remove",
                          "Update",
-                         "get oldest person",
-                         "get persons closest to average"]
+                  "Get oldest person",
+                  "Get persons closest to average"]
 
-    ui.print_menu("Inventory Menu", options_inventory, "Exit program")
+    ui.print_menu("Inventory Menu", options_hr, "Exit program")
 
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]

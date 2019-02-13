@@ -30,14 +30,14 @@ def start_module():
     """
 
     # you code
-    options_inventory = ["Show table",
+    options_accounting = ["Show table",
                          "Add",
                          "Remove",
                          "Update",
-                         "which year max",
-                         "avg_amount"]
+                          "Ahich year max",
+                          "Avg amount"]
 
-    ui.print_menu("Inventory Menu", options_inventory, "Exit program")
+    ui.print_menu("Inventory Menu", options_accounting, "Exit program")
 
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
