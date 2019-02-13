@@ -32,6 +32,7 @@ def start_module():
 
     # your code
     labels_count=['Manufacturer', 'Number']
+    labels_avarage=['Avarege items available in stock by given manufacturer']
     options_inventory = ["Show table",
                          "Add",
                          "Remove",
@@ -59,10 +60,11 @@ def start_module():
         data_manager.write_table_to_file(file_directory, table)
     elif option == "5":
         manufacturer = get_counts_by_manufacturers(table)
-        ui.get_inputs(manufacturer, labels_count)
+        ui.print_result(manufacturer, labels_count)
     elif option == "6":
         manufacturer = ui.get_inputs(['Manufacturer: '], 'Please provide Manufacturer that you want to count')
         get_average_by_manufacturer(table, manufacturer)
+        ui.print_result(manufacturer, labels_avarage)
     elif option == "0":
         main.main()
     else:
@@ -207,5 +209,24 @@ def get_average_by_manufacturer(table, manufacturer):
     Returns:
          number
     """
-
+'''
     # your code
+    manufacturers = [] 
+    manucount = {
+    }
+
+    table_len = len(table)
+    for i in range(table_len):
+        manufacturers.append(table[i][2])
+    manu_len = len(manufacturers)
+    for i in range(manu_len):
+        licznik = 0
+        if manufacturers[i] in manucount:
+            continue
+        for j in range(manu_len):
+            if manufacturers[j] == manufacturers[i]:
+                licznik += 1            
+        manucount[manufacturers[i]] = licznik
+
+
+    return avarage'''
