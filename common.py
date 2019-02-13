@@ -52,4 +52,3 @@ def generate_random(table):
             if table[i][0] != generated:
                 counter -= 1
     return generated
-

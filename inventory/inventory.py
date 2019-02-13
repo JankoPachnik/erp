@@ -72,7 +72,7 @@ def show_table(table):
         None
     """
     print(table)
-    #ui.print_table(table)
+    # ui.print_table(table)
 
 
 def add(table):

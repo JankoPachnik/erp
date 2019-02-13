@@ -99,6 +99,9 @@ def print_result(result, label):
     """
 
     # your code
+    print(label)
+    for i in range(result):
+        print(result[i])
 
 
 def print_menu(title, list_options, exit_message):
