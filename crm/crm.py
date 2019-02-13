@@ -29,14 +29,14 @@ def start_module():
     """
 
     # your code
-    options_crm = ["Show table",
+    options_inventory = ["Show table",
                          "Add",
                          "Remove",
                          "Update",
-                   "Get longest name id",
-                   "Get subscribed emails"]
+                         "get longest name id",
+                         "get subscribed emails"]
 
-    ui.print_menu("Inventory Menu", options_crm, "Exit program")
+    ui.print_menu("Inventory Menu", options_inventory, "Exit program")
 
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]

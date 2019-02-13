@@ -17,8 +17,6 @@ import data_manager
 # common module
 import common
 
-import main
-
 
 def start_module():
     """
@@ -28,28 +26,33 @@ def start_module():
 
     Returns:
     None
-    """    
+    """
     # your code
 
     options_inventory = ["Show table",
-               "Add",
-               "Remove",
-               "Update",
-               "Available items",
-               "Average durability"]
-
+                         "Add",
+                         "Remove",
+                         "Update",
+                         "Available items",
+                         "Average durability"]
+    file_directory = 'inventory/inventory.csv'
+    table = data_manager.get_table_from_file(file_directory)
     ui.print_menu("Inventory Menu", options_inventory, "Exit program")
-
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
-        show_table('inventory.csv')
+        show_table(table)
     elif option == "2":
         add(table)
+        data_manager.write_table_to_file(file_directory, table)
     elif option == "3":
+        id_ = input('Please provide ID of a record you want to delete\n')
         remove(table, id_)
+        data_manager.write_table_to_file(file_directory, table)
     elif option == "4":
+        id_ = input('Please provide ID of a record you want to edit\n')
         update(table, id_)
+        data_manager.write_table_to_file(file_directory, table)
     elif option == "0":
         main.main()
     else:
@@ -66,10 +69,8 @@ def show_table(table):
     Returns:
         None
     """
-
-    with open(table, 'r') as f:
-        f.readlines(1)
-
+    print(table)
+    #ui.print_table(table)
 
 
 def add(table):
@@ -84,8 +85,17 @@ def add(table):
     """
 
     # your code 4444
-
-    return table
+    try:
+        unique_id = common.generate_random(table)
+        console = input('Please write a name of a console you want to add\n')
+        developer = input('Please write a name of developer\n')
+        year = input('Please write a year the game was published\n')
+        stock = input('Please write number of copies you want to add\n')
+        new_row = (unique_id, console, developer, year, stock)
+        table.append(new_row)
+        return table
+    except ValueError:
+        print('you need to provide correct Values.')
 
 
 def remove(table, id_):
@@ -99,9 +109,12 @@ def remove(table, id_):
     Returns:
         list: Table without specified record.
     """
-
-    # your code
-
+    try:
+        for i in range(len(table)):
+            if table[i][0] == id_:
+                table.remove(table[i])
+    except ValueError:
+        print('The ID you are trying to reach is currently unavailable')
     return table
 
 
@@ -117,8 +130,24 @@ def update(table, id_):
         list: table with updated record
     """
 
-    # your code
-
+    try:
+        for i in range(len(table)):
+            if table[i][0] == id_:
+                print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
+                console = input('Update name of a Console (current: {})\n'.format(table[i][1]))
+                developer = input('Update name of a developer (current: {})\n'.format(table[i][2]))
+                year = input('Update date of release (current: {})\n'.format(table[i][3]))
+                stock = input('Update number of copies (current: {})\n'.format(table[i][4]))
+                if console != '':
+                    table[i][1] = game_name
+                if developer != '':
+                    table[i][2] = developer
+                if year != '':
+                    table[i][3] = year
+                if stock != '':
+                    table[i][4] = stock
+    except ValueError:
+        print('The ID you are trying to reach is currently unavailable')
     return table
 
 
@@ -151,6 +180,3 @@ def get_average_durability_by_manufacturers(table):
     """
 
     # your code
-
-
-start_module()
