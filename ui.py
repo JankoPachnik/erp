@@ -102,9 +102,12 @@ def print_result(result, label):
     """
 
     # your code
-    print(label)
     a = {"aaa": 1}
     b = ["aaa"]
+
+    print("")
+    print(label)
+
     if type(result) == type(a):
         for i in result:
             print("{:>{a}}  {:>{b}}".format(result[i], i, a=3, b=44))
@@ -113,6 +116,8 @@ def print_result(result, label):
             print(result[i])
     else:
         print(result)
+
+    print("")
 
 
 
