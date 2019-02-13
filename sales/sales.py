@@ -34,7 +34,7 @@ def start_module():
                          "Remove",
                          "Update",
                          "get lowest price item id",
-                         "get itemss old between"]
+                         "get items old between"]
 
     file_directory = 'sales/sales.csv'
     table = data_manager.get_table_from_file(file_directory)
