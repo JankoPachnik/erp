@@ -16,6 +16,8 @@ import ui
 import data_manager
 # common module
 import common
+import main
+
 
 
 def start_module():
@@ -29,6 +31,39 @@ def start_module():
     """
 
     # your code
+    options_inventory = ["Show table",
+                         "Add",
+                         "Remove",
+                         "Update",
+                         "get counts by manufacturers(",
+                         "get average by manufacturer"]
+
+    file_directory = 'store/games.csv'
+    table = data_manager.get_table_from_file(file_directory)
+    ui.print_menu("Store menu", options_inventory, "Exit program")
+    inputs = ui.get_inputs(["Please enter a number: "], "")
+    option = inputs[0]
+    if option == "1":
+        show_table(table)
+    elif option == "2":
+        add(table)
+        data_manager.write_table_to_file(file_directory, table)
+    elif option == "3":
+        id_ = input('Please provide ID of a record you want to delete\n')
+        remove(table, id_)
+        data_manager.write_table_to_file(file_directory, table)
+    elif option == "4":
+        id_ = input('Please provide ID of a record you want to edit\n')
+        update(table, id_)
+        data_manager.write_table_to_file(file_directory, table)
+    elif option == "5":
+        get_counts_by_manufacturers(table)
+    elif option == "6":
+        get_average_by_manufacturer(table, manufacturer)
+    elif option == "0":
+        main.main()
+    else:
+        raise KeyError("There is no such option.")
 
 
 def show_table(table):
@@ -56,7 +91,17 @@ def add(table):
         list: Table with a new record
     """
 
-    # your code
+    try:
+        unique_id = common.generate_random(table)
+        title = input('Please write a title of a game\n')
+        manufacturer = input('Please write a manufacturer\n')
+        price = input('Please write a price \n')
+        in_stock = input('Please write how many days in stock \n')
+        new_row = (unique_id, title, manufacturer, price, in_stock)
+        table.append(new_row)
+        return table
+    except ValueError:
+        print('you need to provide correct Values.')
 
     return table
 
@@ -73,8 +118,12 @@ def remove(table, id_):
         list: Table without specified record.
     """
 
-    # your code
-
+    try:
+        for i in range(len(table)):
+            if table[i][0] == id_:
+                table.remove(table[i])
+    except ValueError:
+        print('The ID you are trying to reach is currently unavailable')
     return table
 
 
@@ -90,8 +139,24 @@ def update(table, id_):
         list: table with updated record
     """
 
-    # your code
-
+    try:
+        for i in range(len(table)):
+            if table[i][0] == id_:
+                print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
+                game_name = input('Update name of the Employee (current: {})\n'.format(table[i][1]))
+                manufacturer = input('Update sales price (current: {})\n'.format(table[i][2]))
+                price = input('Update month of a sales (current: {})\n'.format(table[i][3]))
+                in_stock = input('Update day of a sales (current: {})\n'.format(table[i][4]))
+                if game_name != '':
+                    table[i][1] = game_name
+                if manufacturer != '':
+                    table[i][2] = manufacturer
+                if price != '':
+                    table[i][3] = price
+                if in_stock != '':
+                    table[i][4] = in_stock
+    except ValueError:
+        print('The ID you are trying to reach is currently unavailable')
     return table
 
 
