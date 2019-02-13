@@ -1,101 +1,6 @@
 """ User Interface (UI) module """
 
 
-<<<<<<< HEAD
-# -------------------------------- TABLE FUNCTIONS-------------	
-	max_length_column = []
-	
-
-	# define max length of colums in table
-	def max_length(table, title_list):
-	    max_length_column = []
-	    for column in range(len(title_list)):
-	        temp = 0
-	        for row in range(len(table)):
-	            if len(str(table[row][column])) > temp:
-	                temp = len(str(table[row][column]))
-	                temp = int(temp)
-	        max_length_column.append(temp)
-	    return max_length_column
-	
-	# define added length of table based on column length
-	def sum_length_table(max_length_column, title_list):
-	    sum_length = len(title_list)*2
-	    for i in range(len(max_length_column)):
-	        sum_length += max_length_column[i]
-	    return sum_length
-	
-	# prints upper part of table
-	def print_top_border(sum_length):
-	    print('/', ('-'*(sum_length-3)), '\\')
-	
-
-	# prints middle part of table
-	def print_middle_border(sum_length):
-	    print('|', ('-'*(sum_length-3)), '|')
-	
-
-	# prints bottom part of table
-	def print_bottom_border(sum_length):
-	    print('\\', ('-'*(sum_length-3)), '/')
-	
-
-	# prints columns title - each module has diffrent title_list
-	def print_columns_title(title_list, max_length_column):
-	    for col_i in range(len(title_list)):
-	        col = title_list[col_i]
-	        width = max_length_column[col_i]
-	        print('|', col.center(width),  end='')
-	    print('|')
-	
-
-	# prints what is in table - table is different for each module
-	def print_items_table(table, max_length_column, sum_length, title_list):
-	    row_number = 1
-	    for row in table:
-	        print_middle_border(sum_length)
-	        for col_i in range(len(row)):
-	            col = row[col_i]
-	            width = max_length_column[col_i]
-	            if col_i == 0:
-	                print('|', str(row_number).center(width),  end='')
-	            else:
-	                print('|', col.center(width),  end='')
-	        row_number += 1
-	        print('|')
-	
-
-	# print table based on tilte list and table from modules
-	def print_table(table, title_list):
-	    """
-	    Prints table with data.
-	    Args:
-	        table (list): list of lists - table to display
-	        title_list (list): list containing table headers
-	    Returns:
-	        None: This function doesn't return anything it only prints to console.
-	    """
-	
-	    max_length_column = []
-	    temp_table = table.copy()
-	    temp_table.append(title_list)
-	    max_length_column = max_length(temp_table, title_list)
-	    sum_length = sum_length_table(max_length_column, title_list)
-	    print_top_border(sum_length)
-	    print_columns_title(title_list, max_length_column)
-	    print_items_table(table, max_length_column, sum_length, title_list)
-	    print_bottom_border(sum_length)
-
-
-	def list_of_lists_from(csv_file):
-	    external_file_as_table = []
-	    with open(csv_file, 'r') as file:
-	        for line in file.readlines():
-	            new_line = line.strip('\n')
-	            line_with_commas = new_line.split(';')
-	            external_file_as_table.append(line_with_commas)
-	        return external_file_as_table
-=======
 
 max_length_column = []
 
@@ -178,7 +83,6 @@ def print_table(table, title_list):
     print_columns_title(title_list, max_length_column)
     print_items_table(table, max_length_column, sum_length, title_list)
     print_bottom_border(sum_length)
->>>>>>> bbf49450f0b5279cedb4eba4b05430a831c5acec
 
 		
 

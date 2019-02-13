@@ -38,7 +38,7 @@ def start_module():
                          "get counts by manufacturers(",
                          "get average by manufacturer"]
 
-    file_directory = 'store/games.csv'
+    file_directory = "lightweight-erp-python-black-g\store\games.csv"
     table = data_manager.get_table_from_file(file_directory)
     ui.print_menu("Store menu", options_inventory, "Exit program")
     inputs = ui.get_inputs(["Please enter a number: "], "")
@@ -76,8 +76,8 @@ def show_table(table):
     Returns:
         None
     """
-
-    # your code
+    title_list = ["Id", "Gra", "Producent", "Liczba1", "Liczba2"]
+    ui.print_table(table, title_list)
 
 
 def add(table):
