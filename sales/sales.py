@@ -141,8 +141,8 @@ def update(table, id_):
             if table[i][0] == id_:
                 print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
                 game_data = ui.get_inputs(['Game name ({}): '.format(table[i][1]), 'Price ({}): '.format(table[i][2]),
-                                           'Month ({}): '.format(table[i][3]), 'Day'.format(table[i][4]),
-                                           'Year'.format(table[i][5])], "Please update information about product")
+                                           'Month ({}): '.format(table[i][3]), 'Day ({}): '.format(table[i][4]),
+                                           'Year ({}): '.format(table[i][5])], "Please update information about product")
                 if game_data[0] != '':
                     table[i][1] = game_data[0]
                 if game_data[1] != '':
