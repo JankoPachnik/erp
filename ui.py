@@ -84,6 +84,7 @@ def print_table(table, title_list):
     print_items_table(table, max_length_column, sum_length, title_list)
     print_bottom_border(sum_length)
 
+		
 
 def print_result(result, label):
     """
