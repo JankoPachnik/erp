@@ -27,7 +27,7 @@ def get_random_special():
     return x
 
 
-# table
+# generate random unique ID
 def generate_random(table):
     """
     Generates random and unique string. Used for id/key generation:
@@ -40,21 +40,16 @@ def generate_random(table):
     Returns:
         string: Random and unique string
     """
-    table_directory = table + '/' + table + '.csv'
-    id_in_file = []
-    with open(table_directory, 'r') as f:
-        for line in f:
-            id_in_file.append(line[:8].strip())
-    counter = 0
-    while counter == 0:
+    generated = []
+    counter = 1
+    while counter != 0:
         generated = (get_random_lower() + get_random_special() +
                      get_random_digit() + get_random_upper() +
                      get_random_special() + get_random_upper() +
                      get_random_lower() + get_random_digit())
-        counter = len(id_in_file)
-        for i in range(len(id_in_file)):
-            if generated == id_in_file:
-                counter == 0
-                break
-
+        counter = len(table)
+        for i in range(len(table)):
+            if table[i][0] != generated:
+                counter -= 1
+    return generated
 
