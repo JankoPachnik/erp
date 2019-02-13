@@ -31,14 +31,15 @@ def start_module():
     """
 
     # your code
+    labels_count=['Manufacturer', 'Number']
     options_inventory = ["Show table",
                          "Add",
                          "Remove",
                          "Update",
-                         "get counts by manufacturers(",
-                         "get average by manufacturer"]
+                         "Get counts by manufacturers",
+                         "Get average by manufacturer"]
 
-    file_directory = "lightweight-erp-python-black-g\store\games.csv"
+    file_directory = "store/games.csv"
     table = data_manager.get_table_from_file(file_directory)
     ui.print_menu("Store menu", options_inventory, "Exit program")
     inputs = ui.get_inputs(["Please enter a number: "], "")
@@ -49,16 +50,18 @@ def start_module():
         add(table)
         data_manager.write_table_to_file(file_directory, table)
     elif option == "3":
-        id_ = input('Please provide ID of a record you want to delete\n')
+        id_ = ui.get_inputs(['id: '], 'Please provide ID of a record you want to delete')
         remove(table, id_)
         data_manager.write_table_to_file(file_directory, table)
     elif option == "4":
-        id_ = input('Please provide ID of a record you want to edit\n')
+        id_ = ui.get_inputs(['id: '], 'Please provide ID of a record you want to edit')
         update(table, id_)
         data_manager.write_table_to_file(file_directory, table)
     elif option == "5":
-        get_counts_by_manufacturers(table)
+        manufacturer = get_counts_by_manufacturers(table)
+        ui.get_inputs(manufacturer, labels_count)
     elif option == "6":
+        manufacturer = ui.get_inputs(['Manufacturer: '], 'Please provide Manufacturer that you want to count')
         get_average_by_manufacturer(table, manufacturer)
     elif option == "0":
         main.main()
@@ -93,16 +96,15 @@ def add(table):
 
     try:
         unique_id = common.generate_random(table)
-        title = input('Please write a title of a game\n')
-        manufacturer = input('Please write a manufacturer\n')
-        price = input('Please write a price \n')
-        in_stock = input('Please write how many days in stock \n')
+        title = ui.get_inputs(['Title'], 'Please write a title of a game')
+        manufacturer = ui.get_inputs(['Manufacturer'], 'Please write a manufacturer')
+        price = ui.get_inputs(['Price'], 'Please write a price')
+        in_stock = ui.get_inputs(['In Stock'], 'Please write how many days in stock')
         new_row = (unique_id, title, manufacturer, price, in_stock)
         table.append(new_row)
         return table
     except ValueError:
-        print('you need to provide correct Values.')
-
+        ui.print_error_message('you need to provide correct Values.')
     return table
 
 
@@ -123,7 +125,7 @@ def remove(table, id_):
             if table[i][0] == id_:
                 table.remove(table[i])
     except ValueError:
-        print('The ID you are trying to reach is currently unavailable')
+        ui.print_error_message('The ID you are trying to reach is currently unavailable')
     return table
 
 
@@ -176,7 +178,23 @@ def get_counts_by_manufacturers(table):
     """
 
     # your code
+    manufacturers = [] 
+    manucount = {
+    }
 
+    table_len = len(table)
+    for i in range(table_len):
+        manufacturers.append(table[i][2])
+    manu_len = len(manufacturers)
+    for i in range(manu_len):
+        licznik = 0
+        if manufacturers[i] in manucount:
+            continue
+        for j in range(manu_len):
+            if manufacturers[j] == manufacturers[i]:
+                licznik += 1            
+        manucount[manufacturers[i]] = licznik
+    return manucount
 
 def get_average_by_manufacturer(table, manufacturer):
     """
