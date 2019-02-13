@@ -17,6 +17,8 @@ import data_manager
 # common module
 import common
 
+import main
+
 
 def start_module():
     """
