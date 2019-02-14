@@ -51,17 +51,18 @@ def start_module():
             add(table)
             data_manager.write_table_to_file(file_directory, table)
         elif option == "3":
-            id_ = ui.get_inputs(['Please provide ID of a record you want to delete\n'])
+            id_ = ui.get_inputs(['Please provide ID of a record you want to delete\n'], "")
             remove(table, id_)
             data_manager.write_table_to_file(file_directory, table)
         elif option == "4":
-            id_ = ui.get_inputs(['Please provide ID of a record you want to edit\n'])
+            id_ = ui.get_inputs(['Please provide ID of a record you want to edit\n'], "")
             update(table, id_)
             data_manager.write_table_to_file(file_directory, table)
         elif option == "5":
             which_year_max(table)
         elif option == "6":
-            get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
+            year = ui.get_inputs(['year: \n'], "Please provide year you want to check ")
+            avg_amount(table, year)
         elif option == "0":
             main.main()
         else:
@@ -178,13 +179,16 @@ def which_year_max(table):
     """
     d = {}
     for i in range(len(table)):
-        print(table[i][3])
         if table[i][4] == 'in':
-            d[table[i][3]] = int(table[i][5])
+            d[table[i][3]] = int(table[i][5]) + d.setdefault(table[i][3], 0)
         if table[i][4] == 'out':
-            d[table[i][3]] = int(table[i][5])
-    print(d)
-    # your code
+            d[table[i][3]] = d.setdefault(table[i][3], 0) - int(table[i][5])
+    max_year = ['', -99999999999]
+    for key, value in d.items():
+        if value >= max_year[1]:
+            max_year[0] = 'The most profitable year was ' + key
+            max_year[1] = value
+    ui.print_result(max_year[1], max_year[0])
 
 
 def avg_amount(table, year):
@@ -198,5 +202,16 @@ def avg_amount(table, year):
     Returns:
         number
     """
-
-    # your code 4a
+    year_list = []
+    for i in range(len(table)):
+        if table[i][3] == year[0]:
+            if table[i][4] == 'in':
+                year_list.append(int(table[i][5]))
+            if table[i][4] == 'out':
+                year_list.append(int(table[i][5])*-1)
+    profit = 0
+    for i in range(len(year_list)):
+        profit += year_list[i]
+    avg_profit = profit / len(year_list)
+    label = 'The average profit in year ' + str(year)
+    ui.print_result(avg_profit, label)
