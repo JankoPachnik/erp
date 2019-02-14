@@ -30,8 +30,8 @@ def start_module():
                          "Add",
                          "Remove",
                          "Update",
-                         "get oldest person",
-                         "get persons closest to average"]
+                         "Get oldest person",
+                         "Get persons closest to average"]
 
     file_directory = 'hr/persons.csv'
     table = data_manager.get_table_from_file(file_directory)
@@ -44,17 +44,19 @@ def start_module():
         add(table)
         data_manager.write_table_to_file(file_directory, table)
     elif option == "3":
-        id_ = input('Please provide ID of a record you want to delete\n')
+        id_ = ui.get_inputs(['ID: '], 'Please provide ID of a record you want to delete')
         remove(table, id_)
         data_manager.write_table_to_file(file_directory, table)
     elif option == "4":
-        id_ = input('Please provide ID of a record you want to edit\n')
+        id_ = ui.get_inputs(['ID: '], 'Please provide ID of a record you want to edit')
         update(table, id_)
         data_manager.write_table_to_file(file_directory, table)
     elif option == "5":
-        get_oldest_person(table)
+        oldest = get_oldest_person(table)
+        ui.print_result(oldest, 'Oldest persons: ')
     elif option == "6":
-        get_persons_closest_to_average(table)
+        avarage = get_persons_closest_to_average(table)
+        ui.print_result(avarage, 'People closest to avarage: ')
     elif option == "0":
         main.main()
     else:
@@ -86,13 +88,13 @@ def add(table):
     """
     try:
         unique_id = common.generate_random(table)
-        employee = input('Please write a name of an Employee\n')
-        year = input('Please write a year of birth\n')
+        employee = ui.get_inputs(['Name: '], 'Please write a name of an Employee')
+        year = ui.get_inputs(['Year: '], 'Please write a year of birth')
         new_row = (unique_id, employee, year)
         table.append(new_row)
         return table
     except ValueError:
-        print('you need to provide correct Values.')
+        ui.print_error_message('You need to provide correct Values.')
 
     return table
 
@@ -114,7 +116,7 @@ def remove(table, id_):
             if table[i][0] == id_:
                 table.remove(table[i])
     except ValueError:
-        print('The ID you are trying to reach is currently unavailable')
+        ui.print_error_message('The ID you are trying to reach is currently unavailable')
     return table
 
 
@@ -160,7 +162,20 @@ def get_oldest_person(table):
     """
 
     # your code
+    persons_and_age = table.copy()
+    oldest = int(table[0][2])
+    oldest_persons = []
+    table_len = len(table)
 
+    for rows in range(table_len):
+        if int(persons_and_age[rows][2]) < oldest:
+            oldest = int(persons_and_age[rows][2])
+
+    for i in range(table_len):
+        if int(persons_and_age[i][2]) == oldest:
+            oldest_persons.append(persons_and_age[i])
+
+    return oldest_persons
 
 def get_persons_closest_to_average(table):
     """
@@ -171,6 +186,30 @@ def get_persons_closest_to_average(table):
 
     Returns:
         list: list of strings (name or names if there are two more with the same value)
-    """
-
+    """    
     # your code
+
+    table_len = len(table)
+    avg = 0
+    age_sum = 0
+    closest_number = 0
+    closest_to_avarage = []
+    peoples_age = []
+
+    for i in range(table_len):
+        peoples_age.append(table[i][2])
+        age_sum += int(table[i][2])
+
+    avg = age_sum/table_len
+    avg = int(round(avg, 0))
+    liczaj = abs(avg - int(peoples_age[0]))
+    for i in range(table_len):
+        if abs(avg - int(peoples_age[i])) < liczaj:
+            closest_number = abs(avg - int(peoples_age[i]))
+
+    for i in range (table_len):
+        if int(peoples_age[i]) == avg + closest_number or int(peoples_age[i]) == avg - closest_number:
+            closest_to_avarage.append(table[i])
+
+    return closest_to_avarage
+
