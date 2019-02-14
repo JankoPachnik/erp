@@ -179,7 +179,7 @@ def get_available_items(table):
     table_len = len(table)
 
     for row in range(table_len):
-        if (int(table[row][3]) + int(table[row][4]) >= 2018):
+        if (int(table[row][3]) + int(table[row][4]) >= 2017):
             year_and_durability.append(table[row])
 
     if year_and_durability == None:
