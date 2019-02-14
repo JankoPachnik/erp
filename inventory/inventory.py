@@ -30,41 +30,42 @@ def start_module():
     None
     """
     # your code
-
-    options_inventory = ["Show table",
-                         "Add",
-                         "Remove",
-                         "Update",
-                         "Available items",
-                         "Average durability"]
-    file_directory = 'inventory/inventory.csv'
-    table = data_manager.get_table_from_file(file_directory)
-    ui.print_menu("Inventory Menu", options_inventory, "Exit program")
-    inputs = ui.get_inputs(["Please enter a number: "], "")
-    option = inputs[0]
-    if option == "1":
-        show_table(table)
-    elif option == "2":
-        add(table)
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "3":
-        id_ = ui.get_inputs(['id: '], 'Please provide ID of a record you want to delete')
-        remove(table, id_)
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "4":
-        id_ = ui.get_inputs(['id: '], 'Please provide ID of a record you want to edit')
-        update(table, id_)
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "5":
-        available = get_available_items(table)
-        ui.print_result(available, 'These items are available')
-    elif option == "6":
-        durability = get_average_durability_by_manufacturers(table)
-        ui.print_result(durability, 'Avarage durability by manufacturers')
-    elif option == "0":
-        main.main()
-    else:
-        raise KeyError("There is no such option.")
+    module_active = 1
+    while module_active == 1:
+        options_inventory = ["Show table",
+                             "Add",
+                             "Remove",
+                             "Update",
+                             "Available items",
+                             "Average durability"]
+        file_directory = 'inventory/inventory.csv'
+        table = data_manager.get_table_from_file(file_directory)
+        ui.print_menu("Inventory Menu", options_inventory, "Exit program")
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+        if option == "1":
+            show_table(table)
+        elif option == "2":
+            add(table)
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "3":
+            id_ = ui.get_inputs(['id: '], 'Please provide ID of a record you want to delete')
+            remove(table, id_[0])
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "4":
+            id_ = ui.get_inputs(['Please provide ID of a record you want to edit\n'], "")
+            update(table, id_[0])
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "5":
+            available = get_available_items(table)
+            ui.print_result(available, 'These items are available')
+        elif option == "6":
+            durability = get_average_durability_by_manufacturers(table)
+            ui.print_result(durability, 'Average durability by manufacturers')
+        elif option == "0":
+            main.main()
+        else:
+            raise KeyError("There is no such option.")
 
 
 def show_table(table):
@@ -77,8 +78,8 @@ def show_table(table):
     Returns:
         None
     """
-    print(table)
-    # ui.print_table(table)
+    title_list = ["Id", "Name", "Manufacturer", "Year", "Durability"]
+    ui.print_table(table, title_list)
 
 
 def add(table):
@@ -95,15 +96,15 @@ def add(table):
     # your code 4444
     try:
         unique_id = common.generate_random(table)
-        console = ui.get_inputs(['Console: '],'Please write a name of a console you want to add')
-        developer = ui.get_inputs(['Name: '], 'Please write a name of developer')
-        year = ui.get_inputs(['Year: '], 'Please write a year the game was published')
-        stock = ui.get_inputs(['Number of copies: '], 'Please write number of copies you want to add')
-        new_row = (unique_id, console, developer, year, stock)
+        game_data = ui.get_inputs(['Name: ', 'Manufacturer: ', 'Year: ', 'Durability: '],
+                                  "Please provide information about product")
+        new_row = (unique_id, game_data[0], game_data[1], game_data[2], game_data[3])
         table.append(new_row)
         return table
     except ValueError:
-        ui.print_error_message('You need to provide correct Values.')
+        print('you need to provide correct Values.')
+
+    return table
 
 
 def remove(table, id_):
@@ -142,20 +143,19 @@ def update(table, id_):
         for i in range(len(table)):
             if table[i][0] == id_:
                 print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
-                console = input('Update name of a Console (current: {})\n'.format(table[i][1]))
-                developer = input('Update name of a developer (current: {})\n'.format(table[i][2]))
-                year = input('Update date of release (current: {})\n'.format(table[i][3]))
-                stock = input('Update number of copies (current: {})\n'.format(table[i][4]))
-                if console != '':
-                    table[i][1] = game_name
-                if developer != '':
-                    table[i][2] = developer
-                if year != '':
-                    table[i][3] = year
-                if stock != '':
-                    table[i][4] = stock
+                game_data = ui.get_inputs(['Name ({}): '.format(table[i][1]), 'Manufaturer ({}): '.format(table[i][2]),
+                                           'Year ({}): '.format(table[i][3]), 'Durability ({}): '.format(table[i][4])],
+                                          "Please update information about product")
+                if game_data[0] != '':
+                    table[i][1] = game_data[0]
+                if game_data[1] != '':
+                    table[i][2] = game_data[1]
+                if game_data[2] != '':
+                    table[i][3] = game_data[2]
+                if game_data[3] != '':
+                    table[i][4] = game_data[3]
     except ValueError:
-        ui.print_error_message('The ID you are trying to reach is currently unavailable')
+        print('The ID you are trying to reach is currently unavailable')
     return table
 
 
