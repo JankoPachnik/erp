@@ -137,17 +137,31 @@ def get_longest_name_id(table):
         """
 
     # your code6
-    all_items = [table[1] for table in table]
+
+    all_items = []
     longest_now = 0
     result = 0
+
+    names_ID = [table[0] for table in table]
+    full_name = [table[1] for table in table]
+
+    for element in range(len(names_ID)):
+        all_items = names_ID
+        all_items[element] += full_name[element]
+
+
     for i in all_items:
-        result = 0
         new = len(i)
         if new >= longest_now:
             longest_now = new
             result = i
+
+    result = result[0:8]
+
     label = "longest name"
     ui.print_result(result, label)
+    return result
+
 
 
 # the question: Which customers has subscribed to the newsletter?
@@ -183,8 +197,12 @@ def get_subscribed_emails(table):
         else:
             element += 1
 
+    for element in range(len(lista)):
+        lista[element] = lista[element][:-2]
+
 
 
     label = "get_subscribed_emails"
     result = lista
     ui.print_result(result, label)
+    return result
