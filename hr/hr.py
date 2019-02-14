@@ -26,41 +26,44 @@ def start_module():
     Returns:
         None
     """
-    options_inventory = ["Show table",
-                         "Add",
-                         "Remove",
-                         "Update",
-                         "Get oldest person",
-                         "Get persons closest to average"]
+    module_active = 1
+    while module_active == 1:
+        options_inventory = ["Show table",
+                             "Add",
+                             "Remove",
+                             "Update",
+                             "Get oldest person",
+                             "Get persons closest to average"]
 
-    file_directory = 'hr/persons.csv'
-    table = data_manager.get_table_from_file(file_directory)
-    ui.print_menu("HR menu", options_inventory, "Exit program")
-    inputs = ui.get_inputs(["Please enter a number: "], "")
-    option = inputs[0]
-    if option == "1":
-        show_table(table)
-    elif option == "2":
-        add(table)
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "3":
-        id_ = ui.get_inputs(['ID: '], 'Please provide ID of a record you want to delete')
-        remove(table, id_)
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "4":
-        id_ = ui.get_inputs(['ID: '], 'Please provide ID of a record you want to edit')
-        update(table, id_)
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "5":
-        oldest = get_oldest_person(table)
-        ui.print_result(oldest, 'Oldest persons: ')
-    elif option == "6":
-        avarage = get_persons_closest_to_average(table)
-        ui.print_result(avarage, 'People closest to avarage: ')
-    elif option == "0":
-        main.main()
-    else:
-        raise KeyError("There is no such option.")
+        file_directory = 'hr/persons.csv'
+        table = data_manager.get_table_from_file(file_directory)
+        ui.print_menu("HR menu", options_inventory, "Exit program")
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+        if option == "1":
+            show_table(table)
+        elif option == "2":
+            add(table)
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "3":
+            id_ = ui.get_inputs(['ID: '], 'Please provide ID of a record you want to delete')
+            remove(table, id_[0])
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "4":
+            id_ = ui.get_inputs(['ID: '], 'Please provide ID of a record you want to edit')
+            update(table, id_[0])
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "5":
+            oldest = get_oldest_person(table)
+            ui.print_result(oldest, 'Oldest persons: ')
+        elif option == "6":
+            avarage = get_persons_closest_to_average(table)
+            ui.print_result(avarage, 'People closest to average: ')
+        elif option == "0":
+            module_active = 0
+            main.main()
+        else:
+            raise KeyError("There is no such option.")
 
 
 def show_table(table):
@@ -73,7 +76,8 @@ def show_table(table):
     Returns:
         None
     """
-
+    title_list = ["id", "name", "birth_year"]
+    ui.print_table(table, title_list)
 
 
 def add(table):
@@ -88,13 +92,13 @@ def add(table):
     """
     try:
         unique_id = common.generate_random(table)
-        employee = ui.get_inputs(['Name: '], 'Please write a name of an Employee')
-        year = ui.get_inputs(['Year: '], 'Please write a year of birth')
-        new_row = (unique_id, employee, year)
+        game_data = ui.get_inputs(['Name: ', 'Year of birth: '],
+                                  "Please provide information about employee")
+        new_row = (unique_id, game_data[0], game_data[1])
         table.append(new_row)
         return table
     except ValueError:
-        ui.print_error_message('You need to provide correct Values.')
+        ui.print_error_message('you need to provide correct Values.')
 
     return table
 
@@ -135,15 +139,14 @@ def update(table, id_):
     try:
         for i in range(len(table)):
             if table[i][0] == id_:
-                print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
-                employee = input('Update name of the Employee (current: {})\n'.format(table[i][1]))
-                year = input('Update year of birth (current: {})\n'.format(table[i][2]))
-                if employee != '':
-                    table[i][1] = employee
-                if year != '':
-                    table[i][2] = year
+                game_data = ui.get_inputs(['Month ({}): '.format(table[i][1]), 'Day ({}): '.format(table[i][2]),
+                                           ],"Please update information about product")
+                if game_data[0] != '':
+                    table[i][1] = game_data[0]
+                if game_data[1] != '':
+                    table[i][2] = game_data[1]
     except ValueError:
-        print('The ID you are trying to reach is currently unavailable')
+        ui.print_error_message('The ID you are trying to reach is currently unavailable')
     return table
 
 
@@ -176,6 +179,7 @@ def get_oldest_person(table):
             oldest_persons.append(persons_and_age[i])
 
     return oldest_persons
+
 
 def get_persons_closest_to_average(table):
     """
