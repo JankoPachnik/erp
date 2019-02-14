@@ -185,9 +185,9 @@ def get_subscribed_emails(table):
     lista = []
     for element in range(len(names)):
         lista = names
-        lista[element] += ":"
+        lista[element] += ";"
         lista[element] += email[element]
-        lista[element] += ":"
+        lista[element] += ";"
         lista[element] += subsc[element]
 
     element = 0
