@@ -18,7 +18,15 @@ import main
 import data_manager
 # common module
 import common
+import datetime
+from operator import itemgetter
 
+ID = 0
+TITLE = 1
+PRICE = 2
+MONTH = 3
+DAY = 4
+YEAR = 5
 
 def start_module():
     """
@@ -165,18 +173,29 @@ def update(table, id_):
 # ------------------
 
 def get_lowest_price_item_id(table):
+
     """
     Question: What is the id of the item that was sold for the lowest price?
     if there are more than one item at the lowest price, return the last item by alphabetical order of the title
 
     Args:
-        table (list): data table to work on
+        table (list of lists): data table to work on
 
     Returns:
          string: id
     """
-
-    # your code
+    min_price = int(table[0][PRICE])
+    for row in table:
+        current_price = int(row[PRICE])
+        if current_price < min_price:
+            min_price = current_price
+    rows_with_lowest_price = []
+    for row in table:
+        if int(row[PRICE]) == min_price:
+            rows_with_lowest_price.append(row)
+    
+    sorted_list = sorted(rows_with_lowest_price, key=itemgetter(TITLE))
+    print (sorted_list)
 
 
 def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
@@ -195,5 +214,12 @@ def get_items_sold_between(table, month_from, day_from, year_from, month_to, day
     Returns:
         list: list of lists (the filtered table)
     """
+   
+   
+
+
+
+
+
 
     # your code
