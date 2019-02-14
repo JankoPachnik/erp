@@ -52,17 +52,20 @@ def start_module():
             data_manager.write_table_to_file(file_directory, table)
         elif option == "3":
             id_ = ui.get_inputs(['Please provide ID of a record you want to delete\n'], "")
-            remove(table, id_)
+            remove(table, id_[0])
             data_manager.write_table_to_file(file_directory, table)
         elif option == "4":
             id_ = ui.get_inputs(['Please provide ID of a record you want to edit\n'], "")
-            update(table, id_)
+            update(table, id_[0])
             data_manager.write_table_to_file(file_directory, table)
         elif option == "5":
-            which_year_max(table)
+            max_year = which_year_max(table)
+            ui.print_result(max_year[1], max_year[0])
         elif option == "6":
             year = ui.get_inputs(['year: \n'], "Please provide year you want to check ")
-            avg_amount(table, year)
+            avg_profit = avg_amount(table, year)
+            label = 'The average profit in year ' + str(year)
+            ui.print_result(avg_profit, label)
         elif option == "0":
             main.main()
         else:
@@ -103,7 +106,7 @@ def add(table):
         table.append(new_row)
         return table
     except ValueError:
-        print('you need to provide correct Values.')
+        ui.print_error_message('you need to provide correct Values.')
 
     return table
 
@@ -125,7 +128,7 @@ def remove(table, id_):
             if table[i][0] == id_:
                 table.remove(table[i])
     except ValueError:
-        print('The ID you are trying to reach is currently unavailable')
+        ui.print_error_message('The ID you are trying to reach is currently unavailable')
     return table
 
 
@@ -144,7 +147,6 @@ def update(table, id_):
     try:
         for i in range(len(table)):
             if table[i][0] == id_:
-                print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
                 game_data = ui.get_inputs(['Month ({}): '.format(table[i][1]), 'Day ({}): '.format(table[i][2]),
                                            'Year ({}): '.format(table[i][3]), 'Type ({}): '.format(table[i][4]),
                                            'Amount ({}): '.format(table[i][5])],
@@ -160,7 +162,7 @@ def update(table, id_):
                 if game_data[4] != '':
                     table[i][5] = game_data[4]
     except ValueError:
-        print('The ID you are trying to reach is currently unavailable')
+        ui.print_error_message('The ID you are trying to reach is currently unavailable')
     return table
 
 
@@ -188,7 +190,7 @@ def which_year_max(table):
         if value >= max_year[1]:
             max_year[0] = 'The most profitable year was ' + key
             max_year[1] = value
-    ui.print_result(max_year[1], max_year[0])
+    return max_year[1], max_year[0]
 
 
 def avg_amount(table, year):
@@ -213,5 +215,5 @@ def avg_amount(table, year):
     for i in range(len(year_list)):
         profit += year_list[i]
     avg_profit = profit / len(year_list)
-    label = 'The average profit in year ' + str(year)
-    ui.print_result(avg_profit, label)
+    return avg_profit
+
