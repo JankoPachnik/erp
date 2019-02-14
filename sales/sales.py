@@ -109,7 +109,7 @@ def add(table):
         table.append(new_row)
         return table
     except ValueError:
-        print('you need to provide correct Values.')
+        ui.print_error_message('you need to provide correct Values.')
 
     return table
 
@@ -131,7 +131,7 @@ def remove(table, id_):
             if table[i][0] == id_:
                 table.remove(table[i])
     except ValueError:
-        print('The ID you are trying to reach is currently unavailable')
+        ui.print_error_message('The ID you are trying to reach is currently unavailable')
     return table
 
 
@@ -150,7 +150,6 @@ def update(table, id_):
     try:
         for i in range(len(table)):
             if table[i][0] == id_:
-                print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
                 game_data = ui.get_inputs(['Game name ({}): '.format(table[i][1]), 'Price ({}): '.format(table[i][2]),
                                            'Month ({}): '.format(table[i][3]), 'Day ({}): '.format(table[i][4]),
                                            'Year ({}): '.format(table[i][5])], "Please update information about product")
@@ -165,7 +164,7 @@ def update(table, id_):
                 if game_data[4] != '':
                     table[i][5] = game_data[4]
     except ValueError:
-        print('The ID you are trying to reach is currently unavailable')
+        ui.print_error_message('The ID you are trying to reach is currently unavailable')
     return table
 
 
@@ -195,7 +194,7 @@ def get_lowest_price_item_id(table):
             rows_with_lowest_price.append(row)
     
     sorted_list = sorted(rows_with_lowest_price, key=itemgetter(TITLE))
-    print (sorted_list)
+    print(sorted_list)
 
 
 def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
