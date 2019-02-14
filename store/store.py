@@ -31,44 +31,47 @@ def start_module():
     """
 
     # your code
-    labels_count=['Manufacturer', 'Number']
-    labels_avarage=['Avarege items available in stock by given manufacturer']
-    options_inventory = ["Show table",
-                         "Add",
-                         "Remove",
-                         "Update",
-                         "Get counts by manufacturers",
-                         "Get average by manufacturer"]
+    module_active = 1
+    while module_active == 1:
+        labels_count=['Manufacturer', 'Number']
+        labels_avarage=['Avarege items available in stock by given manufacturer']
+        options_inventory = ["Show table",
+                             "Add",
+                             "Remove",
+                             "Update",
+                             "Get counts by manufacturers",
+                             "Get average by manufacturer"]
 
-    file_directory = "store/games.csv"
-    table = data_manager.get_table_from_file(file_directory)
-    ui.print_menu("Store menu", options_inventory, "Exit program")
-    inputs = ui.get_inputs(["Please enter a number: "], "")
-    option = inputs[0]
-    if option == "1":
-        show_table(table)
-    elif option == "2":
-        add(table)
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "3":
-        id_ = ui.get_inputs(['id: '], 'Please provide ID of a record you want to delete')
-        remove(table, id_)
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "4":
-        id_ = ui.get_inputs(['id: '], 'Please provide ID of a record you want to edit')
-        update(table, id_)
-        data_manager.write_table_to_file(file_directory, table)
-    elif option == "5":
-        manufacturer = get_counts_by_manufacturers(table)
-        ui.print_result(manufacturer, labels_count)
-    elif option == "6":
-        manufacturer = ui.get_inputs(['Manufacturer: '], 'Please provide Manufacturer that you want to count')
-        get_average_by_manufacturer(table, manufacturer)
-        ui.print_result(manufacturer, labels_avarage)
-    elif option == "0":
-        main.main()
-    else:
-        raise KeyError("There is no such option.")
+        file_directory = "store/games.csv"
+        table = data_manager.get_table_from_file(file_directory)
+        ui.print_menu("Store menu", options_inventory, "Exit program")
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+        if option == "1":
+            show_table(table)
+        elif option == "2":
+            add(table)
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "3":
+            id_ = ui.get_inputs(['id: '], 'Please provide ID of a record you want to delete')
+            remove(table, id_)
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "4":
+            id_ = ui.get_inputs(['Please provide ID of a record you want to edit\n'], "")
+            update(table, id_[0])
+            data_manager.write_table_to_file(file_directory, table)
+        elif option == "5":
+            manufacturer = get_counts_by_manufacturers(table)
+            ui.print_result(manufacturer, labels_count)
+        elif option == "6":
+            manufacturer = ui.get_inputs(['Manufacturer: '], 'Please provide Manufacturer that you want to count')
+            available = get_average_by_manufacturer(table, manufacturer)
+            ui.print_result(available, labels_avarage)
+        elif option == "0":
+            module_active = 0
+            main.main()
+        else:
+            raise KeyError("There is no such option.")
 
 
 def show_table(table):
@@ -98,15 +101,14 @@ def add(table):
 
     try:
         unique_id = common.generate_random(table)
-        title = ui.get_inputs(['Title'], 'Please write a title of a game')
-        manufacturer = ui.get_inputs(['Manufacturer'], 'Please write a manufacturer')
-        price = ui.get_inputs(['Price'], 'Please write a price')
-        in_stock = ui.get_inputs(['In Stock'], 'Please write how many days in stock')
-        new_row = (unique_id, title, manufacturer, price, in_stock)
+        game_data = ui.get_inputs(['Game name: ', 'Manufacturer: ', 'Price: ', 'Days in stock: '],
+                                  "Please provide information about product")
+        new_row = (unique_id, game_data[0], game_data[1], game_data[2], game_data[3])
         table.append(new_row)
         return table
     except ValueError:
-        ui.print_error_message('you need to provide correct Values.')
+        print('you need to provide correct Values.')
+
     return table
 
 
@@ -142,23 +144,22 @@ def update(table, id_):
     Returns:
         list: table with updated record
     """
-
     try:
         for i in range(len(table)):
             if table[i][0] == id_:
                 print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
-                game_name = input('Update name of the Employee (current: {})\n'.format(table[i][1]))
-                manufacturer = input('Update sales price (current: {})\n'.format(table[i][2]))
-                price = input('Update month of a sales (current: {})\n'.format(table[i][3]))
-                in_stock = input('Update day of a sales (current: {})\n'.format(table[i][4]))
-                if game_name != '':
-                    table[i][1] = game_name
-                if manufacturer != '':
-                    table[i][2] = manufacturer
-                if price != '':
-                    table[i][3] = price
-                if in_stock != '':
-                    table[i][4] = in_stock
+                game_data = ui.get_inputs(['Game name ({}): '.format(table[i][1]), 'Price ({}): '.format(table[i][2]),
+                                           'Month ({}): '.format(table[i][3]), 'Day ({}): '.format(table[i][4]),
+                                           ], "Please update information about product")
+                if game_data[0] != '':
+                    table[i][1] = game_data[0]
+                if game_data[1] != '':
+                    table[i][2] = game_data[1]
+                if game_data[2] != '':
+                    table[i][3] = game_data[2]
+                if game_data[3] != '':
+                    table[i][4] = game_data[3]
+
     except ValueError:
         print('The ID you are trying to reach is currently unavailable')
     return table
@@ -198,6 +199,7 @@ def get_counts_by_manufacturers(table):
         manucount[manufacturers[i]] = number
     return manucount
 
+
 def get_average_by_manufacturer(table, manufacturer):
     """
     Question: What is the average amount of games in stock of a given manufacturer?
@@ -211,7 +213,6 @@ def get_average_by_manufacturer(table, manufacturer):
     """
 
     # your code
-    avarage = 0
     manufacturers = [] 
     manufacturers_stock = []
     stock_number = 0
@@ -227,7 +228,6 @@ def get_average_by_manufacturer(table, manufacturer):
             stock_number += float(manufacturers_stock[i])
             number += 1
 
-    avarage = stock_number/number
-    print (avarage)
+    average = stock_number/number
 
-    return avarage
+    return average

@@ -59,7 +59,7 @@ def start_module():
             update(table, id_)
             data_manager.write_table_to_file(file_directory, table)
         elif option == "5":
-            get_lowest_price_item_id(table)
+            which_year_max(table)
         elif option == "6":
             get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to)
         elif option == "0":
@@ -176,7 +176,14 @@ def which_year_max(table):
     Returns:
         number
     """
-
+    d = {}
+    for i in range(len(table)):
+        print(table[i][3])
+        if table[i][4] == 'in':
+            d[table[i][3]] = int(table[i][5])
+        if table[i][4] == 'out':
+            d[table[i][3]] = int(table[i][5])
+    print(d)
     # your code
 
 
