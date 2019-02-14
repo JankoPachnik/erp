@@ -102,7 +102,7 @@ def add(table):
         table.append(new_row)
         return table
     except ValueError:
-        print('you need to provide correct Values.')
+        ui.print_error_message('you need to provide correct Values.')
 
     return table
 
@@ -142,7 +142,6 @@ def update(table, id_):
     try:
         for i in range(len(table)):
             if table[i][0] == id_:
-                print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
                 game_data = ui.get_inputs(['Name ({}): '.format(table[i][1]), 'Manufaturer ({}): '.format(table[i][2]),
                                            'Year ({}): '.format(table[i][3]), 'Durability ({}): '.format(table[i][4])],
                                           "Please update information about product")
@@ -155,7 +154,7 @@ def update(table, id_):
                 if game_data[3] != '':
                     table[i][4] = game_data[3]
     except ValueError:
-        print('The ID you are trying to reach is currently unavailable')
+        ui.print_error_message('The ID you are trying to reach is currently unavailable')
     return table
 
 
