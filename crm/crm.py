@@ -142,22 +142,22 @@ def get_longest_name_id(table):
     longest_now = 0
     result = 0
 
-    names_ID = [table[0] for table in table]
-    full_name = [table[1] for table in table]
+    names_ID = [table[1] for table in table]
+    full_name = [table[0] for table in table]
 
     for element in range(len(names_ID)):
         all_items = names_ID
         all_items[element] += full_name[element]
 
-
+    result = []
     for i in all_items:
         new = len(i)
         if new >= longest_now:
             longest_now = new
-            result = i
+            result.append(i)
 
-    result = result[0:8]
-
+    result = max(result)
+    result = result[-8:]
     label = "longest name"
     ui.print_result(result, label)
     return result
@@ -199,8 +199,6 @@ def get_subscribed_emails(table):
 
     for element in range(len(lista)):
         lista[element] = lista[element][:-2]
-
-
 
     label = "get_subscribed_emails"
     result = lista
