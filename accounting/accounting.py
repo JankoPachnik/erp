@@ -69,6 +69,7 @@ def start_module():
             label = 'The average profit in year ' + str(year)
             ui.print_result(avg_profit, label)
         elif option == "0":
+            module_active = 0
             main.main()
         else:
             raise KeyError("There is no such option.")
@@ -192,7 +193,7 @@ def which_year_max(table):
         if value >= max_year[1]:
             max_year[0] = key
             max_year[1] = value
-    return max_year[0], max_year[1]
+    return max_year
 
 
 def avg_amount(table, year):
