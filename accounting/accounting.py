@@ -20,6 +20,8 @@ import data_manager
 # common module
 import common
 
+TYPE = 4
+
 
 def start_module():
     """
@@ -181,16 +183,16 @@ def which_year_max(table):
     """
     d = {}
     for i in range(len(table)):
-        if table[i][4] == 'in':
+        if table[i][TYPE] == 'in':
             d[table[i][3]] = int(table[i][5]) + d.setdefault(table[i][3], 0)
-        if table[i][4] == 'out':
+        if table[i][TYPE] == 'out':
             d[table[i][3]] = d.setdefault(table[i][3], 0) - int(table[i][5])
     max_year = ['', -99999999999]
     for key, value in d.items():
         if value >= max_year[1]:
-            max_year[0] = 'The most profitable year was ' + key
+            max_year[0] = key
             max_year[1] = value
-    return max_year[1], max_year[0]
+    return max_year[0], max_year[1]
 
 
 def avg_amount(table, year):
