@@ -62,7 +62,7 @@ def start_module():
             data_manager.write_table_to_file(file_directory, table)
         elif option == "5":
             max_year = which_year_max(table)
-            ui.print_result(max_year[1], max_year[0])
+            ui.print_result(max_year[0], max_year[1])
         elif option == "6":
             year = ui.get_inputs(['year: \n'], "Please provide year you want to check ")
             avg_profit = avg_amount(table, year)
