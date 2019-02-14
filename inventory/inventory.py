@@ -48,13 +48,19 @@ def start_module():
         add(table)
         data_manager.write_table_to_file(file_directory, table)
     elif option == "3":
-        id_ = input('Please provide ID of a record you want to delete\n')
+        id_ = ui.get_inputs(['id: '], 'Please provide ID of a record you want to delete')
         remove(table, id_)
         data_manager.write_table_to_file(file_directory, table)
     elif option == "4":
-        id_ = input('Please provide ID of a record you want to edit\n')
+        id_ = ui.get_inputs(['id: '], 'Please provide ID of a record you want to edit')
         update(table, id_)
         data_manager.write_table_to_file(file_directory, table)
+    elif option == "5":
+        available = get_available_items(table)
+        ui.print_result(available, 'These items are available')
+    elif option == "6":
+        durability = get_average_durability_by_manufacturers(table)
+        ui.print_result(durability, 'Avarage durability by manufacturers')
     elif option == "0":
         main.main()
     else:
@@ -89,15 +95,15 @@ def add(table):
     # your code 4444
     try:
         unique_id = common.generate_random(table)
-        console = input('Please write a name of a console you want to add\n')
-        developer = input('Please write a name of developer\n')
-        year = input('Please write a year the game was published\n')
-        stock = input('Please write number of copies you want to add\n')
+        console = ui.get_inputs(['Console: '],'Please write a name of a console you want to add')
+        developer = ui.get_inputs(['Name: '], 'Please write a name of developer')
+        year = ui.get_inputs(['Year: '], 'Please write a year the game was published')
+        stock = ui.get_inputs(['Number of copies: '], 'Please write number of copies you want to add')
         new_row = (unique_id, console, developer, year, stock)
         table.append(new_row)
         return table
     except ValueError:
-        print('you need to provide correct Values.')
+        ui.print_error_message('You need to provide correct Values.')
 
 
 def remove(table, id_):
@@ -116,7 +122,7 @@ def remove(table, id_):
             if table[i][0] == id_:
                 table.remove(table[i])
     except ValueError:
-        print('The ID you are trying to reach is currently unavailable')
+        ui.print_error_message('The ID you are trying to reach is currently unavailable')
     return table
 
 
@@ -149,7 +155,7 @@ def update(table, id_):
                 if stock != '':
                     table[i][4] = stock
     except ValueError:
-        print('The ID you are trying to reach is currently unavailable')
+        ui.print_error_message('The ID you are trying to reach is currently unavailable')
     return table
 
 
@@ -168,7 +174,18 @@ def get_available_items(table):
     """
 
     # your code
+    no_items = 'No items are available'
+    year_and_durability = []
+    table_len = len(table)
 
+    for row in range(table_len):
+        if (int(table[row][3]) + int(table[row][4]) >= 2018):
+            year_and_durability.append(table[row])
+
+    if year_and_durability == None:
+        return no_items
+
+    return year_and_durability
 
 def get_average_durability_by_manufacturers(table):
     """
@@ -182,3 +199,27 @@ def get_average_durability_by_manufacturers(table):
     """
 
     # your code
+    manufacturers = []
+    manufacturers_durability = []
+    table_len = len(table)
+
+    manufacturer_avarage_durability = {
+
+    }
+
+    for i in range(table_len):
+        manufacturers.append(table[i][2])
+        manufacturers_durability.append(table[i][4])
+
+    for j in range(table_len):
+        number = 0
+        sum_of_durability = 0
+        if manufacturers[j] in manufacturer_avarage_durability:
+            continue
+        for k in range(table_len):
+            if manufacturers[k] == manufacturers[j]:
+                number += 1
+                sum_of_durability += int(manufacturers_durability[k])
+        manufacturer_avarage_durability[manufacturers[j]] = sum_of_durability/number
+              
+    return manufacturer_avarage_durability
