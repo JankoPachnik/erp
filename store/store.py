@@ -54,7 +54,7 @@ def start_module():
             data_manager.write_table_to_file(file_directory, table)
         elif option == "3":
             id_ = ui.get_inputs(['id: '], 'Please provide ID of a record you want to delete')
-            remove(table, id_)
+            remove(table, id_[0])
             data_manager.write_table_to_file(file_directory, table)
         elif option == "4":
             id_ = ui.get_inputs(['Please provide ID of a record you want to edit\n'], "")
@@ -84,7 +84,7 @@ def show_table(table):
     Returns:
         None
     """
-    title_list = ["Id", "Gra", "Producent", "Liczba1", "Liczba2"]
+    title_list = ["Id", "Game", "Manufacturer", "Price", "in Stock"]
     ui.print_table(table, title_list)
 
 
@@ -101,13 +101,13 @@ def add(table):
 
     try:
         unique_id = common.generate_random(table)
-        game_data = ui.get_inputs(['Game name: ', 'Manufacturer: ', 'Price: ', 'Days in stock: '],
+        game_data = ui.get_inputs(['Title: ', 'Manufacturer: ', 'Price: ', 'Days in stock: '],
                                   "Please provide information about product")
         new_row = (unique_id, game_data[0], game_data[1], game_data[2], game_data[3])
         table.append(new_row)
         return table
     except ValueError:
-        print('you need to provide correct Values.')
+        ui.print_error_message('you need to provide correct Values.')
 
     return table
 
@@ -147,7 +147,6 @@ def update(table, id_):
     try:
         for i in range(len(table)):
             if table[i][0] == id_:
-                print('Now you can edit data of a file. Leave blank space to keep remaining value\n')
                 game_data = ui.get_inputs(['Game name ({}): '.format(table[i][1]), 'Price ({}): '.format(table[i][2]),
                                            'Month ({}): '.format(table[i][3]), 'Day ({}): '.format(table[i][4]),
                                            ], "Please update information about product")
@@ -161,7 +160,7 @@ def update(table, id_):
                     table[i][4] = game_data[3]
 
     except ValueError:
-        print('The ID you are trying to reach is currently unavailable')
+        ui.print_error_message('The ID you are trying to reach is currently unavailable')
     return table
 
 
